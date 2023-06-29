@@ -14,7 +14,98 @@ public class Main  {
         new File("generated/org/example/").mkdirs();
         Files.write(Paths.get("generated/org/example/Main.class"), dumpMain());
         Files.write(Paths.get("generated/org/example/TryFinalTest.class"), dumpTryFinalTest());
+        Files.write(Paths.get("generated/org/example/ContantValue.class"), dumpConstantValueTest());
     }
+
+    public static byte[] dumpConstantValueTest() {
+
+        ClassWriter classWriter = new ClassWriter(0);
+        FieldVisitor fieldVisitor;
+        MethodVisitor methodVisitor;
+
+        classWriter.visit(V11, ACC_PUBLIC, "org/example/ContantValue", null, "java/lang/Object", null);
+
+        classWriter.visitSource("SourceFile", null);
+
+        classWriter.visitInnerClass("java/lang/invoke/MethodHandles$Lookup", "java/lang/invoke/MethodHandles", "Lookup",
+                ACC_PUBLIC | ACC_FINAL | ACC_STATIC);
+
+        {
+            fieldVisitor = classWriter.visitField(ACC_PUBLIC | ACC_STATIC, "test", "Ljava/lang/String;", null,
+                    "INITIAL-VALUE");
+            fieldVisitor.visitEnd();
+        }
+        {
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+            methodVisitor.visitCode();
+            Label label0 = new Label();
+            methodVisitor.visitLabel(label0);
+            methodVisitor.visitLineNumber(12, label0);
+            methodVisitor.visitVarInsn(ALOAD, 0);
+            methodVisitor.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+            methodVisitor.visitInsn(RETURN);
+            Label label1 = new Label();
+            methodVisitor.visitLabel(label1);
+            methodVisitor.visitLocalVariable("this", "Lorg/example/ContantValue;", null, label0, label1, 0);
+            methodVisitor.visitMaxs(1, 1);
+            methodVisitor.visitEnd();
+        }
+
+        {
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC | ACC_STATIC, "<clinit>", "()V", null, null);
+            methodVisitor.visitCode();
+            methodVisitor.visitInsn(RETURN);
+            methodVisitor.visitMaxs(0, 1);
+            methodVisitor.visitEnd();
+        }
+        {
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC | ACC_STATIC, "main", "([Ljava/lang/String;)V", null,
+                    null);
+            methodVisitor.visitCode();
+            Label label0 = new Label();
+            methodVisitor.visitLabel(label0);
+            methodVisitor.visitLineNumber(8, label0);
+            methodVisitor.visitTypeInsn(NEW, "org/example/ContantValue");
+            methodVisitor.visitInsn(DUP);
+            methodVisitor.visitMethodInsn(INVOKESPECIAL, "org/example/ContantValue", "<init>", "()V", false);
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "org/example/ContantValue", "test", "()V", false);
+            Label label1 = new Label();
+            methodVisitor.visitLabel(label1);
+            methodVisitor.visitLineNumber(9, label1);
+            methodVisitor.visitInsn(RETURN);
+            Label label2 = new Label();
+            methodVisitor.visitLabel(label2);
+            methodVisitor.visitLocalVariable("args", "[Ljava/lang/String;", null, label0, label2, 0);
+            methodVisitor.visitMaxs(2, 1);
+            methodVisitor.visitEnd();
+        }
+
+
+        {
+            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, "test", "()V", null, null);
+            methodVisitor.visitCode();
+            Label label0 = new Label();
+            methodVisitor.visitLabel(label0);
+            methodVisitor.visitLineNumber(8, label0);
+            methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            methodVisitor.visitFieldInsn(GETSTATIC, "org/example/ContantValue", "test", "Ljava/lang/String;");
+            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V",
+                    false);
+            Label label1 = new Label();
+            methodVisitor.visitLabel(label1);
+            methodVisitor.visitLineNumber(9, label1);
+            methodVisitor.visitInsn(RETURN);
+            Label label2 = new Label();
+            methodVisitor.visitLabel(label2);
+            methodVisitor.visitLocalVariable("this", "Lorg/example/ContantValue;", null, label0, label2, 0);
+            methodVisitor.visitMaxs(2, 1);
+            methodVisitor.visitEnd();
+        }
+        classWriter.visitEnd();
+
+        return classWriter.toByteArray();
+    }
+
 
     public static byte[] dumpMain() {
 
